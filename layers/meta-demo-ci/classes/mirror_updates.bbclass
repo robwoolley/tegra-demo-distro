@@ -28,6 +28,8 @@ python downloads_mirror_update() {
     except ImportError:
         pass
 
+    bb.note("Running downloads_mirror_update")
+
     src_uri = (d.getVar("SRC_URI") or "").split()
     if len(src_uri) == 0:
         return
@@ -90,6 +92,8 @@ python sstate_mirror_update() {
     except ImportError:
         pass
 
+    bb.note("Running sstate_mirror_update")
+
     if d.getVar('SSTATE_SKIP_CREATION') == '1':
         return
 
@@ -129,7 +133,10 @@ python () {
     except ImportError:
         pass
 
+    bb.note("Initializing mirror_updates")
+
     if bb.utils.to_boolean(d.getVar("UPDATE_DOWNLOADS_MIRROR")):
+        bb.note("UPDATE_DOWNLOADS_MIRROR is enabled.")
         mirror = urllib.parse.urlparse(d.getVar("DOWNLOADS_MIRROR_URL"))
         enable = False
         if mirror.scheme == 'file':
@@ -139,6 +146,7 @@ python () {
                 bb.warn("DOWNLOADS_MIRROR_URL (%s) not writable" % mirror.path)
         elif mirror.scheme == 's3':
             if s3session:
+                bb.note("UPDATE_DOWNLOADS_MIRROR: s3session is enabled.")
                 enable = True
             else:
                 bb.warn("UPDATE_DOWNLOADS_MIRROR enabled but s3session module cannot be loaded")
@@ -146,6 +154,7 @@ python () {
             bb.warn("UPDATE_DOWNLOADS_MIRROR enabled, but DOWNLOADS_MIRROR_URL not file:// or s3:// URL")
 
         if enable:
+            bb.note("Enabling downloads_mirror_update")
             postfuncs = (d.getVarFlag("do_fetch", "postfuncs") or "").split()
             if "downloads_mirror_update" not in postfuncs:
                 d.appendVarFlag("do_fetch", "postfuncs", " downloads_mirror_update")
@@ -161,6 +170,7 @@ python () {
                 bb.warn("SSTATE_MIRROR_URL (%s) not writable, skipping updates" % mirror.path)
         elif mirror.scheme == 's3':
             if s3session:
+                bb.note("UPDATE_SSTATE_MIRROR: s3session is enabled.")
                 enable = True
             else:
                 bb.warn("UPDATE_SSTATE_MIRROR enabled but s3session module cannot be loaded")
@@ -168,6 +178,7 @@ python () {
             bb.warn("UPDATE_SSTATE_MIRROR enabled, but SSTATE_MIRROR_URL not file:// or s3:// URL")
 
         if enable:
+            bb.note("Enabling sstate_mirror_update")
             for task in (d.getVar("SSTATETASKS") or "").split():
                 postfuncs = (d.getVarFlag(task, "postfuncs") or "").split()
                 if "sstate_task_postfunc" in postfuncs and "sstate_mirror_update" not in postfuncs:

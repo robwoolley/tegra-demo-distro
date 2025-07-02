@@ -46,6 +46,7 @@ class S3Session(object):
         bb.note("Using AWS profile: %s" % provider._profile_name)
 
     def upload(self, Filename, Bucket, Key):
+        bb.note("s3session: upload %s/%s/%s" % (Bucket, Key, Filename))
         if self.s3client is None:
             self.makeclient()
         for attempt in range(self.maxtries):
@@ -63,6 +64,7 @@ class S3Session(object):
         return False
 
     def download(self, Bucket, Key, Filename, quiet=True):
+        bb.note("s3session: download %s/%s/%s" % (Bucket, Key, Filename))
         if self.s3client is None:
             self.makeclient()
         for attempt in range(10):
