@@ -25,10 +25,10 @@ def fix_env(d):
     for v in awsvars:
         val = os.getenv(v)
         if val:
-            bb.debug(2, "Have %s=%s in env" % (v, val))
+            bb.info(2, "Have %s=%s in env" % (v, val))
             continue
         val = origenv and origenv.getVar(v)
         if val:
             os.environ[v] = val
-            bb.debug(2, 'Set %s=%s in env' % (v, val))
-        bb.debug(2, 'No setting for %s' % v)
+            bb.info(2, 'Set %s=%s in env' % (v, val))
+        bb.info(2, 'No setting for %s' % v)

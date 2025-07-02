@@ -36,7 +36,7 @@ class S3(bb.fetch2.s3.S3):
 try:
     import oeaws.s3session
     bb.fetch2.methods = [m for m in bb.fetch2.methods if not isinstance(m, bb.fetch2.s3.S3)] + [S3()]
-    bb.debug(1, "botos3fetcher: installed")
+    bb.info(1, "botos3fetcher: installed")
 except:
-    bb.debug(1, "botos3fetcher: s3session import failed")
+    bb.info(1, "botos3fetcher: s3session import failed")
     pass

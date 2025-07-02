@@ -64,7 +64,7 @@ python downloads_mirror_update() {
             bb.utils.mkdirhier(os.path.dirname(mirrorfile))
             lf = bb.utils.lockfile("%s.lock" % mirrorfile)
             try:
-                bb.debug(1, "copying: %s -> %s" % (localfile, mirrorfile))
+                bb.info(1, "copying: %s -> %s" % (localfile, mirrorfile))
                 shutil.copyfile(localfile, mirrorfile)
             except IOError:
                 bb.warn("error copying %s to %s" % (localfile, mirrorfile))
@@ -100,7 +100,7 @@ python sstate_mirror_update() {
         bb.utils.mkdirhier(os.path.dirname(mirrorpkg))
         lf = bb.utils.lockfile("%s.lock" % mirrorpkg)
         try:
-            bb.debug(1, "copying: %s -> %s" % (sstatepkg, mirrorpkg))
+            bb.info(1, "copying: %s -> %s" % (sstatepkg, mirrorpkg))
             shutil.copyfile(sstatepkg, mirrorpkg)
             shutil.copyfile(sstatepkg + ".siginfo", mirrorpkg + ".siginfo")
         except IOError:
