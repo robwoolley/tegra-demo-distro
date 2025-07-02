@@ -97,6 +97,7 @@ class S3Session(object):
         return False
 
     def get_object_info(self, Bucket, Key, quiet=True):
+        bb.note("s3session: get_object_info %s/%s" % (Bucket, Key))
         if self.s3client is None:
             self.makeclient()
         for attempt in range(10):
