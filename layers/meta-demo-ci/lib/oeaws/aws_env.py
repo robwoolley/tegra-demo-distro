@@ -31,4 +31,4 @@ def fix_env(d):
         if val:
             os.environ[v] = val
             bb.debug(2, 'Set %s=%s in env' % (v, val))
-        bb.note(2, 'No setting for %s' % v)
+        bb.debug(2, 'No setting for %s' % v)

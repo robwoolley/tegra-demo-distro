@@ -37,6 +37,7 @@ class S3Session(object):
             self.metadata_timeout = 10
 
     def makeclient(self):
+        bb.note("s3session: makeclient")
         os.environ['AWS_METADATA_SERVICE_NUM_ATTEMPTS'] = '{}'.format(self.maxtries)
         os.environ['AWS_METADATA_SERVICE_TIMEOUT'] = '{}'.format(self.metadata_timeout)
         session = botocore.session.get_session()
