@@ -157,7 +157,7 @@ python () {
             # bb.note("Enabling downloads_mirror_update")
             postfuncs = (d.getVarFlag("do_fetch", "postfuncs") or "").split()
             if "downloads_mirror_update" not in postfuncs:
-                bb.note("Adding downloads_mirror_update postfuncs")
+                # bb.note("Adding downloads_mirror_update postfuncs")
                 d.appendVarFlag("do_fetch", "postfuncs", " downloads_mirror_update")
                 d.appendVarFlag("do_fetch", "vardepsexclude", " downloads_mirror_update")
 
