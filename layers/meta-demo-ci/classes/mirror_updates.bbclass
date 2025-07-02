@@ -157,6 +157,7 @@ python () {
             # bb.note("Enabling downloads_mirror_update")
             postfuncs = (d.getVarFlag("do_fetch", "postfuncs") or "").split()
             if "downloads_mirror_update" not in postfuncs:
+                bb.note("Adding downloads_mirror_update postfuncs")
                 d.appendVarFlag("do_fetch", "postfuncs", " downloads_mirror_update")
                 d.appendVarFlag("do_fetch", "vardepsexclude", " downloads_mirror_update")
 
@@ -182,6 +183,7 @@ python () {
             for task in (d.getVar("SSTATETASKS") or "").split():
                 postfuncs = (d.getVarFlag(task, "postfuncs") or "").split()
                 if "sstate_task_postfunc" in postfuncs and "sstate_mirror_update" not in postfuncs:
+                    bb.note("Adding sstate_mirror_update postfuncs")
                     d.appendVarFlag(task, "postfuncs", " sstate_mirror_update")
                     d.appendVarFlag(task, "vardepsexclude", " sstate_mirror_update")
 
