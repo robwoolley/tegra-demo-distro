@@ -179,10 +179,10 @@ python () {
             bb.warn("UPDATE_SSTATE_MIRROR enabled, but SSTATE_MIRROR_URL not file:// or s3:// URL")
 
         if enable:
-            bb.note("Enabling sstate_mirror_update")
+            # bb.note("Enabling sstate_mirror_update")
             for task in (d.getVar("SSTATETASKS") or "").split():
                 postfuncs = (d.getVarFlag(task, "postfuncs") or "").split()
-                bb.note("task: %s, postfuncs: %s" % (task, postfuncs))
+                # bb.note("task: %s, postfuncs: %s" % (task, postfuncs))
                 if "sstate_task_postfunc" in postfuncs and "sstate_mirror_update" not in postfuncs:
                     bb.note("Adding sstate_mirror_update postfuncs")
                     d.appendVarFlag(task, "postfuncs", " sstate_mirror_update")
